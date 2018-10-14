@@ -1,0 +1,1 @@
+* atomfeed-api added by mvn installing the openmrs.module.atomfeed repository.
