@@ -9,6 +9,7 @@ import org.apache.camel.component.properties.PropertiesComponent;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +18,7 @@ import static org.openmrs.module.mclient.MessagingClientConfig.KAFKA_HOST;
 import static org.openmrs.module.mclient.MessagingClientConfig.KAFKA_PORT;
 import static org.openmrs.module.mclient.MessagingClientConfig.KAFKA_TOPIC;
 
+@Component
 public class MessagePublisherClient {
     private static final Logger LOG = LoggerFactory.getLogger(MessagePublisherClient.class);
 
