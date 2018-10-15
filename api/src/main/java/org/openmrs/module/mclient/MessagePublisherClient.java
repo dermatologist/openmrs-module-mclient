@@ -13,6 +13,10 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.openmrs.module.mclient.MessagingClientConfig.KAFKA_HOST;
+import static org.openmrs.module.mclient.MessagingClientConfig.KAFKA_PORT;
+import static org.openmrs.module.mclient.MessagingClientConfig.KAFKA_TOPIC;
+
 public class MessagePublisherClient {
     private static final Logger LOG = LoggerFactory.getLogger(MessagePublisherClient.class);
 
@@ -24,13 +28,15 @@ public class MessagePublisherClient {
             PropertiesComponent pc = getContext().getComponent("properties", PropertiesComponent.class);
             pc.setLocation("classpath:application.properties");
 
+            String host_port = "kafka." + KAFKA_HOST + ":kafka." + KAFKA_PORT;
+            String topic = "kafka:" + KAFKA_TOPIC;
             // setup kafka component with the brokers
             KafkaComponent kafka = new KafkaComponent();
-            kafka.setBrokers("{{kafka.host}}:{{kafka.port}}");
+            kafka.setBrokers(host_port);
             camelContext.addComponent("kafka", kafka);
 
             from("direct:kafkaStart").routeId("DirectToKafka")
-                    .to("kafka:{{producer.topic}}").log("${headers}");
+                    .to(topic).log("${headers}");
 
 //            // Topic can be set in header as well.
 //

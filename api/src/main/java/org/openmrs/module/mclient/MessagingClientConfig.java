@@ -18,4 +18,7 @@ import org.springframework.stereotype.Component;
 public class MessagingClientConfig {
 	
 	public final static String MODULE_PRIVILEGE = "Messaging Client Privilege";
+	public final static String KAFKA_HOST = "localhost";
+	public final static String KAFKA_PORT = "9092";
+	public final static String KAFKA_TOPIC = "openmrs-input";
 }
