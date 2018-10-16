@@ -4,7 +4,9 @@ import org.ict4h.atomfeed.server.service.Event;
 import org.openmrs.module.atomfeed.api.writers.impl.DefaultFeedWriter;
 import org.openmrs.module.mclient.MessagePublisherClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component("mclient.KafkaProducerServiceImpl")
 public class KafkaProducerServiceImpl extends DefaultFeedWriter {
 
     @Autowired
