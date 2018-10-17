@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import static org.openmrs.module.mclient.MessagingClientConfig.KAFKA_HOST;
@@ -22,9 +23,30 @@ import static org.openmrs.module.mclient.MessagingClientConfig.KAFKA_TOPIC;
 public class MessagePublisherClient {
     private static final Logger LOG = LoggerFactory.getLogger(MessagePublisherClient.class);
 
-    CamelContext camelContext = new DefaultCamelContext();
+    private CamelContext camelContext = new DefaultCamelContext();
 
-    RouteBuilder routeBuilder = new RouteBuilder() {
+    LinkedList<String> linkedList = new LinkedList<>();
+
+    RouteBuilder consumerRoute = new RouteBuilder() {
+        @Override
+        public void configure() throws Exception {
+            PropertiesComponent pc = getContext().getComponent("properties", PropertiesComponent.class);
+            pc.setLocation("classpath:application.properties");
+
+            log.info("About to start route: Kafka Server -> Log ");
+
+            from("kafka:{{consumer.topic}}?brokers={{kafka.host}}:{{kafka.port}}"
+                    + "&maxPollRecords={{consumer.maxPollRecords}}"
+                    + "&consumersCount={{consumer.consumersCount}}"
+                    + "&seekTo={{consumer.seekTo}}"
+                    + "&groupId={{consumer.group}}")
+                    .routeId("FromKafka")
+                    .log("${body}");
+            linkedList.add("${body}");
+        }
+    };
+
+    RouteBuilder producerRoute = new RouteBuilder() {
         @Override
         public void configure() throws Exception {
             PropertiesComponent pc = getContext().getComponent("properties", PropertiesComponent.class);
@@ -60,9 +82,16 @@ public class MessagePublisherClient {
         }
     };
 
+
+
     // Constructor
     private MessagePublisherClient() throws Exception {
-        this.camelContext.addRoutes(this.routeBuilder);
+        this.camelContext.addRoutes(this.producerRoute);
+        this.camelContext.addRoutes(this.consumerRoute);
+    }
+
+    public String retrive(){
+        return linkedList.removeFirst();
     }
 
     public void publish(String message) {
