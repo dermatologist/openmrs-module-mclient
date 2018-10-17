@@ -33,7 +33,7 @@ public class MessagePublisherClient {
             PropertiesComponent pc = getContext().getComponent("properties", PropertiesComponent.class);
             pc.setLocation("classpath:application.properties");
 
-            log.info("About to start route: Kafka Server -> Log ");
+            LOG.info("About to start route: Kafka Server -> Log ");
 
             from("kafka:{{consumer.topic}}?brokers={{kafka.host}}:{{kafka.port}}"
                     + "&maxPollRecords={{consumer.maxPollRecords}}"
@@ -43,6 +43,7 @@ public class MessagePublisherClient {
                     .routeId("FromKafka")
                     .log("${body}");
             linkedList.add("${body}");
+            LOG.info("${body}");
         }
     };
 
@@ -61,7 +62,7 @@ public class MessagePublisherClient {
 
             from("direct:kafkaStart").routeId("DirectToKafka")
                     .to(topic).log("${headers}");
-
+            LOG.info("${headers}");
 //            // Topic can be set in header as well.
 //
 //            from("direct:kafkaStartNoTopic").routeId("kafkaStartNoTopic")
