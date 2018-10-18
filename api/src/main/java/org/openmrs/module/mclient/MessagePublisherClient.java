@@ -27,25 +27,25 @@ public class MessagePublisherClient {
 
     LinkedList<String> linkedList = new LinkedList<>();
 
-    RouteBuilder consumerRoute = new RouteBuilder() {
-        @Override
-        public void configure() throws Exception {
-            PropertiesComponent pc = getContext().getComponent("properties", PropertiesComponent.class);
-            pc.setLocation("classpath:application.properties");
-
-            LOG.info("About to start route: Kafka Server -> Log ");
-
-            from("kafka:{{consumer.topic}}?brokers={{kafka.host}}:{{kafka.port}}"
-                    + "&maxPollRecords={{consumer.maxPollRecords}}"
-                    + "&consumersCount={{consumer.consumersCount}}"
-                    + "&seekTo={{consumer.seekTo}}"
-                    + "&groupId={{consumer.group}}")
-                    .routeId("FromKafka")
-                    .log("${body}");
-            linkedList.add("${body}");
-            LOG.info("${body}");
-        }
-    };
+//    RouteBuilder consumerRoute = new RouteBuilder() {
+//        @Override
+//        public void configure() throws Exception {
+//            PropertiesComponent pc = getContext().getComponent("properties", PropertiesComponent.class);
+//            pc.setLocation("classpath:application.properties");
+//
+//            LOG.info("About to start route: Kafka Server -> Log ");
+//
+//            from("kafka:{{consumer.topic}}?brokers={{kafka.host}}:{{kafka.port}}"
+//                    + "&maxPollRecords={{consumer.maxPollRecords}}"
+//                    + "&consumersCount={{consumer.consumersCount}}"
+//                    + "&seekTo={{consumer.seekTo}}"
+//                    + "&groupId={{consumer.group}}")
+//                    .routeId("FromKafka")
+//                    .log("${body}");
+//            linkedList.add("${body}");
+//            LOG.info("${body}");
+//        }
+//    };
 
     RouteBuilder producerRoute = new RouteBuilder() {
         @Override
@@ -88,7 +88,7 @@ public class MessagePublisherClient {
     // Constructor
     private MessagePublisherClient() throws Exception {
         this.camelContext.addRoutes(this.producerRoute);
-        this.camelContext.addRoutes(this.consumerRoute);
+        //this.camelContext.addRoutes(this.consumerRoute);
     }
 
     public String retrive(){
