@@ -1,4 +1,4 @@
 openmrs-module-mclient
 ================================
 
-## Work in progress. Do Not Use.
+## Deprecated. Use: https://github.com/E-Health/openmrs-module-atomfeed
