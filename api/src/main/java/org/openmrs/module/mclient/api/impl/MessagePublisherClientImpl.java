@@ -1,4 +1,4 @@
-package org.openmrs.module.mclient;
+package org.openmrs.module.mclient.api.impl;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
@@ -7,6 +7,8 @@ import org.apache.camel.component.kafka.KafkaComponent;
 import org.apache.camel.component.kafka.KafkaConstants;
 import org.apache.camel.component.properties.PropertiesComponent;
 import org.apache.camel.impl.DefaultCamelContext;
+import org.openmrs.event.EventListener;
+import org.openmrs.notification.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -19,8 +21,8 @@ import static org.openmrs.module.mclient.MessagingClientConfig.KAFKA_PORT;
 import static org.openmrs.module.mclient.MessagingClientConfig.KAFKA_TOPIC;
 
 @Component
-public class MessagePublisherClient {
-    private static final Logger LOG = LoggerFactory.getLogger(MessagePublisherClient.class);
+public class MessagePublisherClientImpl {
+    private static final Logger LOG = LoggerFactory.getLogger(MessagePublisherClientImpl.class);
 
     CamelContext camelContext = new DefaultCamelContext();
 
@@ -61,9 +63,10 @@ public class MessagePublisherClient {
     };
 
     // Constructor
-    private MessagePublisherClient() throws Exception {
+    private MessagePublisherClientImpl() throws Exception {
         this.camelContext.addRoutes(this.routeBuilder);
     }
+
 
     public void publish(String message) {
 

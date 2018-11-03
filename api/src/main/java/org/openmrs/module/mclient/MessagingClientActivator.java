@@ -9,9 +9,14 @@
  */
 package org.openmrs.module.mclient;
 
+
+import org.openmrs.Patient;
+import org.openmrs.event.Event;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.module.BaseModuleActivator;
+import org.openmrs.module.mclient.api.MessagePublisherClient;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * This class contains the logic that is run every time this module is either started or shutdown
@@ -19,12 +24,16 @@ import org.openmrs.module.BaseModuleActivator;
 public class MessagingClientActivator extends BaseModuleActivator {
 	
 	private Log log = LogFactory.getLog(this.getClass());
+
+	@Autowired
+    MessagePublisherClient messagePublisherClient;
 	
 	/**
 	 * @see #started()
 	 */
 	public void started() {
 		log.info("Started Messaging Client");
+		Event.subscribe(Patient.class, "CREATED", messagePublisherClient);
 	}
 	
 	/**

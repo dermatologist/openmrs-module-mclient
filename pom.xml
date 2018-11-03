@@ -38,7 +38,16 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+			<dependency>
+				<groupId>org.openmrs.module</groupId>
+				<artifactId>event</artifactId>
+				<version>2.6.0</version>
+				<type>jar</type>
+				<scope>provided</scope>
+			</dependency>
 		</dependencies>
+
 	</dependencyManagement>
 
 	<repositories>
