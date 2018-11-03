@@ -47,7 +47,7 @@ public class HibernateEventInterceptor extends EmptyInterceptor {
     private static ThreadLocal<Stack<HashSet<OpenmrsObject>>> unvoidedObjects = new ThreadLocal<>();
 
     @Autowired
-    private transient MessageEventManager eventManager;
+    MessageEventManager eventManager;
 
     /**
      * @see EmptyInterceptor#afterTransactionBegin(Transaction)

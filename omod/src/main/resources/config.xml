@@ -32,9 +32,11 @@
 		<require_module version="${appuiVersion}">
 			org.openmrs.module.appui
 		</require_module>
+		<!--
         	<require_module version="1.0.5">
             		org.openmrs.module.atomfeed
         	</require_module>
+        	-->
 		<!--
         	<require_module version="2.6.0">
             		org.openmrs.module.event

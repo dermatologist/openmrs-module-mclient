@@ -62,7 +62,6 @@ public class MessagePublisherClient {
 
             from("direct:kafkaStart").routeId("DirectToKafka")
                     .to(topic).log("${headers}");
-            LOG.error("${headers}");
 //            // Topic can be set in header as well.
 //
 //            from("direct:kafkaStartNoTopic").routeId("kafkaStartNoTopic")
