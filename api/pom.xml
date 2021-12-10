@@ -26,7 +26,7 @@
 
     <properties>
         <camel.version>2.22.1</camel.version>
-        <log4j.version>2.7</log4j.version>
+        <log4j.version>2.15.0</log4j.version>
         <atomfeed.version>1.0.5</atomfeed.version>
     </properties>
 
